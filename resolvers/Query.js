@@ -5,7 +5,7 @@ exports.Query = {
   async getPosts() {
     console.log("posts");
     const posts = await Post.find();
-    console.log(posts);
+   
     return posts;
   },
 };
