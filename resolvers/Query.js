@@ -1,7 +1,11 @@
 const { ApolloServer } = require("apollo-server");
+const Post = require("../models/Post");
 
 exports.Query = {
-  sayHi: () => {
-    return "Hi";
+  async getPosts() {
+    console.log("posts");
+    const posts = await Post.find();
+    console.log(posts);
+    return posts;
   },
 };

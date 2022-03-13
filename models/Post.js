@@ -19,8 +19,8 @@ const post_schema = new mongoose.Schema({
   ],
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "posts",
+    ref: "users",
   },
 });
 
-module.exports = mongoose.model("posts", post_schema);
+module.exports = mongoose.model("post", post_schema);
