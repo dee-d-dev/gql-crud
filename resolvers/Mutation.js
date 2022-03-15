@@ -10,14 +10,17 @@ exports.Mutation = {
     context
   ) => {
     //check if user exists
-    // const find_user = User.findOne({email: email });
-
-    // if (find_user) {
-    //   throw new UserInputError("User already has an account");
-    // }
+    const find_user = await User.findOne({ email: email });
 
     //validate user, encrypt password
-    console.log(password);
+    if (find_user) {
+      throw new UserInputError("this email already has an account", {
+        errors: {
+          username: "This mail already has an account",
+        },
+      });
+    }
+
     let hashed_password = await bcrypt.hash(password, 12);
 
     let user = new User({
@@ -35,5 +38,8 @@ exports.Mutation = {
     });
 
     return { username, token, email, password };
+    // } else {
+    //   throw new UserInputError("User already has an account");
+    // }
   },
 };
