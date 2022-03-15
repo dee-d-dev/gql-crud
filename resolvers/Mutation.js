@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const { UserInputError } = require("apollo-server");
 
 exports.Mutation = {
   register: async (
@@ -9,6 +10,12 @@ exports.Mutation = {
     context
   ) => {
     //validate user, encrypt password
+    const find_user = User.findOne({ email });
+
+    if (find_user) {
+      throw new UserInputError("User already has an account");
+    }
+
     let hashed_password = await bcrypt.hash(password, 12);
 
     let user = new User({
