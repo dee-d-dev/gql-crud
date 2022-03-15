@@ -9,13 +9,14 @@ exports.Mutation = {
     { registerInput: { username, password, email } },
     context
   ) => {
-    //validate user, encrypt password
+    //check if user exists
     const find_user = User.findOne({ email });
 
     if (find_user) {
       throw new UserInputError("User already has an account");
     }
 
+    //validate user, encrypt password
     let hashed_password = await bcrypt.hash(password, 12);
 
     let user = new User({
