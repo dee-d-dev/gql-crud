@@ -1,8 +1,8 @@
 const { ApolloServer, gql } = require("apollo-server");
 const { Query } = require("./resolvers/Query");
+const { Mutation } = require("./resolvers/Mutation");
 const { typeDefs } = require("./schema");
 const mongoose = require("mongoose");
-const Post = require("./models/Post");
 require("dotenv").config();
 
 mongoose.connect(process.env.MONGO_URI, () => {
@@ -11,7 +11,7 @@ mongoose.connect(process.env.MONGO_URI, () => {
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers:{Query},
+  resolvers: { Query, Mutation },
 });
 
 server.listen().then(({ url }) => {

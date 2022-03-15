@@ -20,6 +20,7 @@ exports.typeDefs = gql`
     id: ID!
     email: String!
     username: String!
+    password: String!
     token: String!
     created_at: String
   }
