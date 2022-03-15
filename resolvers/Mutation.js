@@ -9,16 +9,7 @@ exports.Mutation = {
     context
   ) => {
     //validate user, encrypt password
-    console.log(username, password, email);
-    let hashed_password = await bcrypt.hash(
-      password,
-      12,
-      (err, hash) => {
-        if (err) {
-          console.log(err);
-        }
-      }
-    );
+    let hashed_password = await bcrypt.hash(password, 12);
 
     let user = new User({
       username,
@@ -36,7 +27,6 @@ exports.Mutation = {
 
     return {
       username: username,
-      password: password,
       token: token,
       email: email,
     };
