@@ -68,4 +68,7 @@ exports.Mutation = {
     });
     return { email, token };
   },
+  createPost: async(parent, {body}, ctx) =>{
+    
+  }
 };
