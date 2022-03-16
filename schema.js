@@ -3,6 +3,7 @@ const { ApolloServer, gql } = require("apollo-server");
 exports.typeDefs = gql`
   type Query {
     getPosts: [Post]
+    getPost(id: ID!): Post
   }
 
   type Post {
@@ -33,5 +34,7 @@ exports.typeDefs = gql`
   type Mutation {
     register(registerInput: registerInput): User!
     login(loginInput: loginInput): User
+    createPost(body: String!): Post
+    deletePost(postId: ID!): String!
   }
 `;
