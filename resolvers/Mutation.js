@@ -52,6 +52,9 @@ exports.Mutation = {
   },
   login: async (parent, { loginInput: { email, password } }, context) => {
     const { errors, valid } = validateLoginInput(email, password);
+     if (!valid) {
+       throw new UserInputError("error", { errors });
+     }
 
     const user = await User.findOne({ email: email });
 
