@@ -12,6 +12,7 @@ mongoose.connect(process.env.MONGO_URI, () => {
 const server = new ApolloServer({
   typeDefs,
   resolvers: { Query, Mutation },
+  context: ({ req }) => ({ req }),
 });
 
 server.listen().then(({ url }) => {

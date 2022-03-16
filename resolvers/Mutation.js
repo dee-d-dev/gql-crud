@@ -2,10 +2,12 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const { UserInputError } = require("apollo-server");
+const check_auth = require("../utils/auth");
 const {
   validateRegisterInput,
   validateLoginInput,
 } = require("../utils/validator");
+const Post = require("../models/Post");
 
 exports.Mutation = {
   register: async (
@@ -52,9 +54,9 @@ exports.Mutation = {
   },
   login: async (parent, { loginInput: { email, password } }, context) => {
     const { errors, valid } = validateLoginInput(email, password);
-     if (!valid) {
-       throw new UserInputError("error", { errors });
-     }
+    if (!valid) {
+      throw new UserInputError("error", { errors });
+    }
 
     const user = await User.findOne({ email: email });
 
@@ -68,7 +70,19 @@ exports.Mutation = {
     });
     return { email, token };
   },
-  createPost: async(parent, {body}, ctx) =>{
-    
-  }
+  createPost: async (parent, { body }, context) => {
+    const user = check_auth(context);
+
+    console.log(user);
+
+    const new_post = new Post({
+      body,
+      user: user.id,
+      username: user.username,
+    });
+
+    const post = await new_post.save();
+
+    return post;
+  },
 };

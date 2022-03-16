@@ -3,6 +3,7 @@ const { AuthenticationError } = require("apollo-server");
 
 module.exports = (context) => {
   const auth_header = context.req.headers.authorization;
+  console.log(auth_header);
 
   if (auth_header) {
     const token = auth_header.split("Bearer ")[1];
@@ -16,4 +17,5 @@ module.exports = (context) => {
     }
     throw new Error("Token must be provided");
   }
+  throw new Error("authentication header must be provided");
 };
