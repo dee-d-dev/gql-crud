@@ -10,7 +10,7 @@ exports.validateRegisterInput = (username, email, password) => {
     const regEx =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (!email.match(regEx)) {
-      error.mail = "Email must be a valid email addresss";
+      errors.mail = "Email must be a valid email addresss";
     }
   }
   if (password.trim() === "") {
