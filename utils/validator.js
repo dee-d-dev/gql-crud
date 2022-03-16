@@ -2,15 +2,15 @@ exports.validateRegisterInput = (username, email, password) => {
   const errors = {};
 
   if (username.trim() === "") {
-    errors.email = "username cannot be empty";
+    errors.username = "username cannot be empty";
   }
   if (email.trim() === "") {
-    errors.email = "username cannot be empty";
+    errors.email = "email cannot be empty";
   } else {
     const regEx =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (!email.match(regEx)) {
-      errors.mail = "Email must be a valid email addresss";
+      errors.email = "Email must be a valid email addresss";
     }
   }
   if (password.trim() === "") {
@@ -18,4 +18,15 @@ exports.validateRegisterInput = (username, email, password) => {
   }
 
   return { errors, valid: Object.keys(errors).length < 1 };
+};
+
+exports.validateLoginInput = (email, password) => {
+  const errors = {};
+
+  if (email.trim() === "") {
+    errors.email = "email cannot be empty";
+  }
+  if (password.trim() === "") {
+    errors.password = "password cannot be empty";
+  }
 };

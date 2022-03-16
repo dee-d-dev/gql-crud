@@ -25,7 +25,13 @@ exports.typeDefs = gql`
     created_at: String
   }
 
+  input loginInput {
+    email: String!
+    password: String!
+  }
+
   type Mutation {
     register(registerInput: registerInput): User!
+    login(loginInput: loginInput): User
   }
 `;
