@@ -29,4 +29,7 @@ exports.validateLoginInput = (email, password) => {
   if (password.trim() === "") {
     errors.password = "password cannot be empty";
   }
+
+  return { errors, valid: Object.keys(errors).length < 1 };
+
 };

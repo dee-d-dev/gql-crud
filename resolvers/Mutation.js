@@ -50,7 +50,7 @@ exports.Mutation = {
     //   throw new UserInputError("User already has an account");
     // }
   },
-  login: async (parent, { email, password }, context) => {
+  login: async (parent, { loginInput: { email, password } }, context) => {
     const { errors, valid } = validateLoginInput(email, password);
 
     const user = await User.findOne({ email: email });
@@ -63,6 +63,6 @@ exports.Mutation = {
     const token = await jwt.sign({ email }, process.env.SECRET_KEY, {
       expiresIn: "3h",
     });
-    return {email, token};
+    return { email, token };
   },
 };
