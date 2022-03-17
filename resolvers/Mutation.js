@@ -48,9 +48,7 @@ exports.Mutation = {
     });
 
     return { username, token, email, password };
-    // } else {
-    //   throw new UserInputError("User already has an account");
-    // }
+   
   },
   login: async (parent, { loginInput: { username, password } }, context) => {
     const { errors, valid } = validateLoginInput(username, password);
