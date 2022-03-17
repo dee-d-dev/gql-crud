@@ -70,14 +70,20 @@ exports.Mutation = {
     });
     return { email, token };
   },
-  createPost: async (parent, { body }, context) => {
+  createPost: async (
+    parent,
+    { input: { body} },
+    context
+  ) => {
     const user = check_auth(context);
 
     // console.log(user);
 
     const new_post = new Post({
       body,
-      username: user.email,
+      user: user.id,
+      username: user.username,
+      created_at: new Date()
     });
 
     const post = await new_post.save();

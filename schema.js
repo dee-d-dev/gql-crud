@@ -31,10 +31,14 @@ exports.typeDefs = gql`
     password: String!
   }
 
+  input newPost {
+    body: String!
+
+  }
   type Mutation {
     register(registerInput: registerInput): User!
-    login(loginInput: loginInput): User
-    createPost(body: String!): Post
+    login(loginInput: loginInput!): User
+    createPost(input: newPost!): Post
     deletePost(postId: ID!): String!
   }
 `;
