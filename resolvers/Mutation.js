@@ -73,17 +73,12 @@ exports.Mutation = {
   createPost: async (parent, { input: { body } }, context) => {
     const client = check_auth(context);
 
-    console.log(client);
-
-    const f_user = await User.findOne({ username: client.username });
-
-    
-    console.log(f_user);
+    const user = await User.findOne({ username: client.username });
 
     const new_post = new Post({
       body,
-      user: f_user.id,
-      username: f_user.username,
+      user: user.id,
+      username: user.username,
       created_at: new Date(),
     });
 
@@ -95,8 +90,8 @@ exports.Mutation = {
   deletePost: async (parent, { postId }, context) => {
     const user = check_auth(context);
     try {
-      const post = await Post.findById(id);
-      if (user.email === post.email) {
+      const post = await Post.findById(postId);
+      if (user.username === post.username) {
         await post.delete();
         return "post deleted";
       }
