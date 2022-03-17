@@ -52,38 +52,39 @@ exports.Mutation = {
     //   throw new UserInputError("User already has an account");
     // }
   },
-  login: async (parent, { loginInput: { email, password } }, context) => {
-    const { errors, valid } = validateLoginInput(email, password);
+  login: async (parent, { loginInput: { username, password } }, context) => {
+    const { errors, valid } = validateLoginInput(username, password);
     if (!valid) {
       throw new UserInputError("error", { errors });
     }
 
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ username: username });
 
     if (!user) {
       errors.general = "User not found";
 
       throw new UserInputError("Wrong credentials", { errors });
     }
-    const token = await jwt.sign({ email }, process.env.SECRET_KEY, {
+    const token = await jwt.sign({ username }, process.env.SECRET_KEY, {
       expiresIn: "3h",
     });
-    return { email, token };
+    return { username, token };
   },
-  createPost: async (
-    parent,
-    { input: { body} },
-    context
-  ) => {
-    const user = check_auth(context);
+  createPost: async (parent, { input: { body } }, context) => {
+    const client = check_auth(context);
 
-    // console.log(user);
+    console.log(client);
+
+    const f_user = await User.findOne({ username: client.username });
+
+    
+    console.log(f_user);
 
     const new_post = new Post({
       body,
-      user: user.id,
-      username: user.username,
-      created_at: new Date()
+      user: f_user.id,
+      username: f_user.username,
+      created_at: new Date(),
     });
 
     const post = await new_post.save();

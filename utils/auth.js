@@ -3,10 +3,10 @@ const { AuthenticationError } = require("apollo-server");
 
 module.exports = (context) => {
   const auth_header = context.req.headers.authorization;
-//   console.log(auth_header);
+  //   console.log(auth_header);
 
   if (auth_header) {
-    const token = auth_header.split(' ');
+    const token = auth_header.split(" ");
     // console.log(token);
     const bearer_token = token[1];
     // console.log(bearer_token)

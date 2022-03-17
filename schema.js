@@ -11,6 +11,7 @@ exports.typeDefs = gql`
     body: String!
     created_at: String!
     username: String!
+    user: String
   }
   input registerInput {
     username: String!
@@ -27,13 +28,12 @@ exports.typeDefs = gql`
   }
 
   input loginInput {
-    email: String!
+    username: String!
     password: String!
   }
 
   input newPost {
     body: String!
-
   }
   type Mutation {
     register(registerInput: registerInput): User!
