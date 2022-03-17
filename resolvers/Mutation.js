@@ -73,12 +73,12 @@ exports.Mutation = {
   createPost: async (parent, { body }, context) => {
     const user = check_auth(context);
 
-    console.log(user);
+    // console.log(user);
 
     const new_post = new Post({
       body,
-      user: user.id,
-      username: user.username,
+    
+      username: user.email,
     });
 
     const post = await new_post.save();
