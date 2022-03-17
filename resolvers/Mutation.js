@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-const { UserInputError } = require("apollo-server");
+const { UserInputError, AuthenticationError } = require("apollo-server");
 const check_auth = require("../utils/auth");
 const {
   validateRegisterInput,
@@ -77,12 +77,25 @@ exports.Mutation = {
 
     const new_post = new Post({
       body,
-    
       username: user.email,
     });
 
     const post = await new_post.save();
 
     return post;
+  },
+
+  deletePost: async (parent, { postId }, context) => {
+    const user = check_auth(context);
+    try {
+      const post = await Post.findById(id);
+      if (user.email === post.email) {
+        await post.delete();
+        return "post deleted";
+      }
+      throw new AuthenticationError("Action not allowed");
+    } catch (err) {
+      throw new Error(err);
+    }
   },
 };
