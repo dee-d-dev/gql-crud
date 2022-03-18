@@ -140,4 +140,28 @@ exports.Mutation = {
     }
     throw new UserInputError("Post not found");
   },
+
+  likePost: async (parent, { postId }, context) => {
+    const { username } = check_auth(context);
+    const post = await Post.findById(postId);
+
+    if (post) {
+      if (post.likes.find((like) => like.username === username)) {
+        //already liked, unlike post
+        post.likes = post.likes.filter((like) => like.username !== username);
+      } else {
+        //not liked, like post
+        post.likes.push({
+          username,
+          created_at: new Date(),
+        });
+      }
+
+      await post.save();
+    } else {
+      throw new UserInputError("Post not found");
+    }
+
+    return post;
+  },
 };
