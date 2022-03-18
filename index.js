@@ -1,7 +1,8 @@
-const { ApolloServer, gql, PubSub } = require("apollo-server");
+const { ApolloServer } = require("apollo-server");
+const { PubSub } = require("graphql-subscriptions");
 const { Query } = require("./resolvers/Query");
 const { Mutation } = require("./resolvers/Mutation");
-const { subscription } = require("./resolvers/Subscription");
+const { Subscription } = require("./resolvers/Subscription");
 const { typeDefs } = require("./schema");
 
 const mongoose = require("mongoose");
@@ -15,7 +16,7 @@ const pubsub = new PubSub();
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers: { Query, Mutation, subscription },
+  resolvers: { Query, Mutation, Subscription },
   context: ({ req, res }) => ({ req, pubsub }),
 });
 

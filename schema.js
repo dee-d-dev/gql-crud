@@ -60,4 +60,8 @@ exports.typeDefs = gql`
     deleteComment(postId: String, commentId: String!): Post!
     likePost(postId: ID!): Post!
   }
+
+  type Subscription {
+    new_post: Post
+  }
 `;

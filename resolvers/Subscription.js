@@ -1,6 +1,6 @@
-exports.subscription = {
+exports.Subscription = {
   new_post: {
-    subscribe: (_, args, { pubsub }) => {
+    subscribe: (_, __, { pubsub }) => {
       pubsub.asyncIterator("NEW_POST");
     }
   },
