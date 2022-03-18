@@ -98,4 +98,7 @@ exports.Mutation = {
       throw new Error(err);
     }
   },
+  createComment: (parent, {postId, body},  context) => {
+
+  }
 };

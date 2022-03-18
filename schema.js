@@ -12,7 +12,23 @@ exports.typeDefs = gql`
     created_at: String!
     username: String!
     user: String
+    comments: [Comment]!
+    likes: [Like]!
   }
+
+  type Comment {
+    id: ID!
+    created_at: String!
+    username: String!
+    body: String!
+  }
+
+  type Like {
+    id: ID!
+    created_at: String!
+    username: String!
+  }
+
   input registerInput {
     username: String!
     password: String!
@@ -40,5 +56,8 @@ exports.typeDefs = gql`
     login(loginInput: loginInput!): User
     createPost(input: newPost!): Post
     deletePost(postId: ID!): String!
+    createComment(postId: String!, body: String!): Post!
+    deleteComment(postId: String, commentId: String!): Post!
+    likePost(postId: ID!): Post!
   }
 `;
