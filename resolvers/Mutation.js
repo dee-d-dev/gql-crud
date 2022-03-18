@@ -123,4 +123,21 @@ exports.Mutation = {
 
     throw new UserInputError("post not found");
   },
+  deleteComment: async (parent, { postId, commentId }, context) => {
+    const { username } = check_auth(context);
+    const post = await Post.findById(postId);
+
+    if (post) {
+      const commentIdx = post.comments.findIndex((c) => c.id == commentId);
+
+      if (post.comments[commentIdx].username === username) {
+        post.comments.splice(commentIdx, 1);
+
+        await post.save();
+        return post;
+      }
+      throw new AuthenticationError("Action not allowed");
+    }
+    throw new UserInputError("Post not found");
+  },
 };
