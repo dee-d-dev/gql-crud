@@ -81,7 +81,7 @@ exports.Mutation = {
 
     const post = await new_post.save();
 
-    context.pubsub.publish("NEW_POST", { new_post: post });
+    context.pubsub.publish("NEW_POST", { post });
 
     return post;
   },

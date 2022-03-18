@@ -62,6 +62,6 @@ exports.typeDefs = gql`
   }
 
   type Subscription {
-    new_post: Post
+    post: Post
   }
 `;
