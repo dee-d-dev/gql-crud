@@ -48,7 +48,6 @@ exports.Mutation = {
     });
 
     return { username, token, email, password };
-   
   },
   login: async (parent, { loginInput: { username, password } }, context) => {
     const { errors, valid } = validateLoginInput(username, password);
@@ -98,7 +97,30 @@ exports.Mutation = {
       throw new Error(err);
     }
   },
-  createComment: (parent, {postId, body},  context) => {
+  createComment: async (parent, { postId, body }, context) => {
+    const { username } = check_auth(context);
 
-  }
+    if (body.trim() === "") {
+      throw new UserInputError("Empty comment", {
+        errors: {
+          body: "comment body cannot be empty",
+        },
+      });
+    }
+
+    const post = await Post.findById(postId);
+
+    if (post) {
+      post.comments.unshift({
+        body,
+        username,
+        created_at: new Date(),
+      });
+
+      await post.save();
+      return post;
+    }
+
+    throw new UserInputError("post not found");
+  },
 };
