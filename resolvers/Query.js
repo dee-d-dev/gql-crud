@@ -1,4 +1,4 @@
-const { ApolloServer } = require("apollo-server");
+
 const Post = require("../models/Post");
 
 exports.Query = {
